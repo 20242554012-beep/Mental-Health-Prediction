@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindCare | Mental Wellness Insights</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-icon">✦</span> MindCare</a>
+    <span class="top-note">ML-powered educational demo</span>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">MENTAL WELLNESS • MACHINE LEARNING</p>
+        <h1>Understand patterns.<br><span>Support wellbeing.</span></h1>
+        <p class="hero-copy">Explore how lifestyle indicators can be used in a machine-learning classification demo.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="brain">☁</div>
+        <div class="spark spark-one">✦</div><div class="spark spark-two">✧</div>
+      </div>
+    </section>
+
+    <section class="metrics-section">
+      <div class="section-heading">
+        <div><p class="eyebrow">MODEL PERFORMANCE</p><h2>Evaluation dashboard</h2></div>
+        <span class="model-tag">Random Forest Classifier</span>
+      </div>
+      <div class="metric-grid">
+        <article class="metric-card"><span>Accuracy</span><strong>{{ metrics.accuracy }}<small>%</small></strong><div class="meter"><i style="width:{{ metrics.accuracy }}%"></i></div></article>
+        <article class="metric-card"><span>Precision</span><strong>{{ metrics.precision }}<small>%</small></strong><div class="meter"><i style="width:{{ metrics.precision }}%"></i></div></article>
+        <article class="metric-card"><span>Recall</span><strong>{{ metrics.recall }}<small>%</small></strong><div class="meter"><i style="width:{{ metrics.recall }}%"></i></div></article>
+        <article class="metric-card"><span>F1-score</span><strong>{{ metrics.f1 }}<small>%</small></strong><div class="meter"><i style="width:{{ metrics.f1 }}%"></i></div></article>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <article class="panel form-panel">
+        <div class="panel-heading"><div><p class="eyebrow">TRY A SAMPLE</p><h2>Wellness indicators</h2></div><span class="step">01 / 02</span></div>
+        <p class="muted">Move each slider from 0 (low) to 10 (high), then run the model.</p>
+        <form id="prediction-form">
+          <div class="slider-row"><div class="slider-label"><label for="stress">Stress level</label><output id="stress-value">5</output></div><input id="stress" name="stress" type="range" min="0" max="10" value="5"></div>
+          <div class="slider-row"><div class="slider-label"><label for="sleep">Sleep quality</label><output id="sleep-value">5</output></div><input id="sleep" name="sleep" type="range" min="0" max="10" value="5"></div>
+          <div class="slider-row"><div class="slider-label"><label for="anxiety">Anxiety indicator</label><output id="anxiety-value">5</output></div><input id="anxiety" name="anxiety" type="range" min="0" max="10" value="5"></div>
+          <div class="slider-row"><div class="slider-label"><label for="workload">Workload pressure</label><output id="workload-value">5</output></div><input id="workload" name="workload" type="range" min="0" max="10" value="5"></div>
+          <div class="slider-row"><div class="slider-label"><label for="support">Social support</label><output id="support-value">5</output></div><input id="support" name="support" type="range" min="0" max="10" value="5"></div>
+          <button class="primary-btn" type="submit" id="submit-btn">Analyze indicators <span>→</span></button>
+        </form>
+        <p class="form-hint">Your entries are processed locally by this demo app and are not saved to a database.</p>
+      </article>
+
+      <article class="panel result-panel">
+        <div class="panel-heading"><div><p class="eyebrow">MODEL OUTPUT</p><h2>Prediction result</h2></div><span class="step">02 / 02</span></div>
+        <div id="empty-state" class="empty-state"><div class="empty-icon">✧</div><h3>Ready when you are</h3><p>Adjust the indicators and select Analyze to see the model output.</p></div>
+        <div id="result-state" class="result-state hidden" aria-live="polite">
+          <div class="result-symbol" id="result-symbol">✓</div>
+          <p class="eyebrow">SYNTHETIC MODEL CLASSIFICATION</p>
+          <h3 id="result-title">Result</h3>
+          <p id="result-message" class="muted"></p>
+          <div class="probability-head"><span>Model probability for class 1</span><strong id="probability-value">0%</strong></div>
+          <div class="probability-track"><div id="probability-bar"></div></div>
+          <p class="result-disclaimer">This is a statistical output from artificial training data, not a clinical assessment or diagnosis.</p>
+        </div>
+        <div class="chart-wrap"><h3>Test-set confusion matrix</h3><div class="matrix">
+          <div class="matrix-cell"><strong>{{ confusion[0][0] }}</strong><span>True negative</span></div>
+          <div class="matrix-cell"><strong>{{ confusion[0][1] }}</strong><span>False positive</span></div>
+          <div class="matrix-cell"><strong>{{ confusion[1][0] }}</strong><span>False negative</span></div>
+          <div class="matrix-cell"><strong>{{ confusion[1][1] }}</strong><span>True positive</span></div>
+        </div></div>
+      </article>
+    </section>
+
+    <section class="info-strip"><span class="info-icon">ⓘ</span><p><strong>Important:</strong> This project uses a synthetic dataset generated for learning. It does not use real mental-health records and must not be used to make health decisions. If you are concerned about your wellbeing, consider speaking with a qualified mental-health professional.</p></section>
+    <footer>MindCare ML Demo <span>Built with Python · Flask · Scikit-learn · HTML · CSS · JavaScript</span></footer>
+  </main>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
